@@ -385,9 +385,7 @@ ifeq ($(BLAS), mkl)
 	BLAS_LIB ?= $(MKLROOT)/lib $(MKLROOT)/lib/intel64
 else ifeq ($(BLAS), open)
 	# OpenBLAS
-	LIBRARIES += openblas
-	BLAS_INCLUDE ?= /opt/OpenBLAS/include /usr/local/include/openblas /usr/include/openblas
-	BLAS_LIB ?= /opt/OpenBLAS/lib
+	LIBRARIES += $(shell pkg-config --libs-only-l openblas | sed 's|-l||g')
 else
 	# ATLAS
 	ifeq ($(LINUX), 1)
