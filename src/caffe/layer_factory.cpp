@@ -48,9 +48,11 @@ LayerRegistry<Dtype>::Registry() {
 template <typename Dtype>
 void LayerRegistry<Dtype>::AddCreator(const string& type, Creator creator) {
   CreatorRegistry& registry = Registry();
-  CHECK_EQ(registry.count(type), 0) << "Layer type " << type
-                                    << " already registered.";
-  registry[type] = creator;
+  if (registry.count(type) != 0) {
+    std::cout<< "Layer type " << type << " already registered.";
+  } else {
+    registry[type] = creator;
+  }
 }
 
 // Get a layer using a LayerParameter.
